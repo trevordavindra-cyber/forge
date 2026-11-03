@@ -65,6 +65,7 @@ function clearTerrain(){pushUndo();var n=0;
  TERRAIN_IDS=[];refreshAll();saveLocal();out('Terrain cleared: '+n+' objects removed','sys');}
 function setTime(h){LIGHT.hour=h;saveLight();render();var hh=Math.floor(h);var mm=Math.round((h-hh)*60);out('Time set to '+hh+':'+(mm<10?'0':'')+mm,'sys');}
 TABS.push(['World',[['icon-part','Grass Field',genGrass],['icon-flat','Island',genIsland],['icon-ball','Hills',genHills],['icon-anchor','Trees',genTrees],null,['icon-out','Clear Terrain',clearTerrain],null,['icon-play2','Dawn',function(){setTime(6.5);}],['icon-play','Noon',function(){setTime(12);}],['icon-stop','Dusk',function(){setTime(18.5);}],['icon-stop2','Night',function(){setTime(22);}]]]);
+buildTabs();
 var _runCmd=runCmd;
 runCmd=function(s){if(!s)return _runCmd(s);var t=s.trim().toLowerCase();
  if(t==='island'){genIsland();return;}
