@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1180">
+<title>Untitled Place - Roblox Studio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;user-select:none}
+body{font-family:'Segoe UI',Arial,Helvetica,sans-serif;font-size:12px;background:#1f1f1f;color:#c9c9c9;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.titlebar{display:flex;align-items:center;background:#191919;padding:5px 12px;gap:12px;flex:none}
+.logo{width:18px;height:18px;background:#e2231a;border-radius:3px;display:inline-block}
+.titlebar .name{color:#fff;font-weight:600;font-size:13px}
+.titlebar .place{color:#8f8f8f}
+.winbtns{margin-left:auto;display:flex;gap:16px;color:#9a9a9a}
+.menubar{background:#2b2b2b;padding:4px 10px;color:#d0d0d0;flex:none}
+.menubar span{padding:2px 7px}
+.menubar span:hover{background:#3d5a80;color:#fff}
+.ribbon-tabs{display:flex;background:#242424;border-bottom:1px solid #151515;flex:none}
+.ribbon-tabs div{padding:5px 16px;color:#979797;cursor:pointer}
+.ribbon-tabs div.on{background:#3a3a3a;color:#fff;border-radius:4px 4px 0 0}
+.ribbon{display:flex;background:#333333;padding:8px 6px;border-bottom:1px solid #161616;flex:none;align-items:center}
+.group{padding:0 12px;border-right:1px solid #222;text-align:center}
+.group .icons{font-size:17px;height:22px}
+.group .lbl{font-size:11px;color:#b5b5b5;margin-top:2px}
+.group .icons span{cursor:pointer;padding:1px 4px;border-radius:3px}
+.group .icons span:hover{background:#454545}
+.tool-sel{color:#4fc3f7}.tool-move{color:#ba68c8}.tool-scale{color:#81c784}.tool-rot{color:#ffb74d}
+.playbtn{background:#23a55a;color:#fff;border-radius:4px;padding:6px 18px;font-size:13px;cursor:pointer;border:none}
+.pubbtn{background:#00a2ff;color:#fff;border-radius:4px;padding:5px 14px;cursor:pointer;border:none}
+.main{display:flex;flex:1;min-height:0}
+.panel{background:#262626;display:flex;flex-direction:column;min-height:0}
+.explorer{width:250px;border-right:1px solid #161616}
+.props{width:280px;border-left:1px solid #161616}
+.phead{background:#383838;padding:5px 10px;color:#dcdcdc;flex:none}
+.pbody{padding:6px 8px;overflow:auto;flex:1}
+.tree div{padding:1px 4px;line-height:1.85;cursor:pointer;white-space:nowrap}
+.tree div:hover{background:#313131}
+.tree div.sel{background:#2d5c8f;color:#fff}
+.ind0{padding-left:4px}.ind1{padding-left:18px}.ind2{padding-left:38px}
+.sq{display:inline-block;width:9px;height:9px;margin-right:6px}
+.viewport{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#5ea7dd 0%,#8ec7ea 45%,#c3e2f4 100%)}
+.floor{position:absolute;left:-40%;right:-40%;bottom:-32%;height:80%;background:#7aa874;background-image:linear-gradient(rgba(255,255,255,.30) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.30) 1px,transparent 1px);background-size:46px 46px;transform:perspective(720px) rotateX(58deg);transform-origin:50% 100%}
+.cube{position:absolute;left:47%;top:34%;width:96px;height:66px;transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(-32deg)}
+.face{position:absolute;width:96px;height:66px;background:#b7b7b7;border:1px solid #8f8f8f}
+.f-top{width:96px;height:96px;background:#d6d6d6;transform:rotateX(90deg) translateZ(66px)}
+.f-left{background:#8e8e8e;transform:rotateY(-90deg) translateZ(48px);width:66px;height:66px;left:-33px}
+.f-right{background:#a3a3a3;transform:rotateY(0deg) translateZ(48px)}
+.selbox{position:absolute;inset:-7px;border:2px solid #00a2ff;pointer-events:none}
+.axis{position:absolute;font-size:15px;pointer-events:none}
+.ax-r{color:#e53935;top:-24px;left:40%}.ax-g{color:#43a047;top:45%;left:-22px}.ax-b{color:#1e88e5;top:45%;right:-22px}
+.caminfo{position:absolute;right:10px;top:8px;color:#28527a;font-size:11px}
+.outwrap{height:170px;border-top:1px solid #161616;background:#262626;display:flex;flex-direction:column;flex:none}
+.outbody{background:#1b1b1b;padding:8px 12px;flex:1;overflow:auto;font-family:Consolas,'Courier New',monospace;font-size:12px;line-height:1.7}
+.ok{color:#4caf50}.dim{color:#9e9e9e}.info{color:#4fc3f7}.warn{color:#ffd54f}.err{color:#e57373}
+.cmdbar{display:flex;background:#2e2e2e;border-top:1px solid #161616;align-items:center;flex:none}
+.cmdbar .cl{padding:6px 10px;color:#8f8f8f}
+.cmdbar input{flex:1;background:#1b1b1b;border:none;color:#c9c9c9;font-family:Consolas,monospace;font-size:12px;padding:6px 8px;margin:4px 8px 4px 0;outline:none}
+.status{display:flex;background:#191919;color:#8a8a8a;padding:4px 12px;gap:22px;font-size:11px;flex:none}
+.status .r{margin-left:auto}
+</style>
+</head>
+<body>
+<div class="titlebar"><span class="logo"></span><span class="name">ROBLOX STUDIO</span><span class="place">Untitled Place - ROBLOX Place</span><div class="winbtns"><span>&#8722;</span><span>&#9633;</span><span>&#10005;</span></div></div>
+<div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Model</span><span>Avatar</span><span>Script</span><span>Test</span><span>Tools</span><span>Plugins</span><span>Help</span></div>
+<div class="ribbon-tabs" id="tabs"><div class="on">Home</div><div>Model</div><div>Avatar</div><div>UI</div><div>Script</div><div>Test</div><div>Plugins</div></div>
+<div class="ribbon">
+<div class="group"><div class="icons"><span class="tool-sel">&#9990;</span><span>&#128230;</span></div><div class="lbl">Clipboard</div></div>
+<div class="group"><div class="icons"><span class="tool-sel" id="t_sel">&#9990;</span><span class="tool-move" id="t_move">&#8596;</span><span class="tool-scale" id="t_scale">&#8597;</span><span class="tool-rot" id="t_rot">&#8635;</span></div><div class="lbl">Tools</div></div>
+<div class="group"><div class="icons"><span>&#9636;</span><span>&#9635;</span></div><div class="lbl">Insert</div></div>
+<div class="group"><div class="icons"><span>&#9111;</span><span>&#10006;&#65039;</span></div><div class="lbl">Edit</div></div>
+<div class="group"><button class="playbtn" id="play">&#9654; Play</button></div>
+<div class="group" style="border-right:none;margin-left:auto"><button class="pubbtn">Publish to Roblox</button></div>
+<div class="group" style="border-right:none"><div class="lbl">Game Settings</div></div>
+</div>
+<div class="main">
+<div class="panel explorer"><div class="phead">Explorer</div><div class="pbody tree" id="tree">
+<div class="ind0">&#9656; <span class="sq" style="background:#ffd54f"></span>Game1</div>
+<div class="ind1 sel">&#9662; <span class="sq" style="background:#64b5f6"></span>Workspace</div>
+<div class="ind2">&#9492; <span class="sq" style="background:#90a4ae"></span>Camera</div>
+<div class="ind2">&#9500; <span class="sq" style="background:#a5d6a7"></span>Baseplate</div>
+<div class="ind2">&#9500; <span class="sq" style="background:#ef9a9a"></span>Part</div>
+<div class="ind2">&#9492; <span class="sq" style="background:#ffcc80"></span>SpawnLocation</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#ce93d8"></span>Lighting</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#4db6ac"></span>ReplicatedStorage</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#4db6ac"></span>ServerScriptService</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#4db6ac"></span>StarterGui</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#4db6ac"></span>StarterPlayer</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#9575cd"></span>SoundService</div>
+<div class="ind1">&#9656; <span class="sq" style="background:#a1887f"></span>Terrain</div>
+</div></div>
+<div class="viewport">
+<div class="floor"></div>
+<div class="cube">
+<div class="face f-top"></div><div class="face f-left"></div><div class="face f-right"></div>
+<div class="selbox"></div><div class="axis ax-r">&#8593;</div><div class="axis ax-g">&#8592;</div><div class="axis ax-b">&#8594;</div>
+</div>
+<div class="caminfo">Camera: (24.5, 18.2, -30.1)</div>
+</div>
+<div class="panel props"><div class="phead">Properties - Part</div><div class="pbody">
+<div style="color:#8fb4d9;font-weight:600">Appearance</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">BrickColor</span>Medium stone grey</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Material</span>Plastic</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Reflectance</span>0</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Transparency</span>0</div>
+<div style="color:#8fb4d9;font-weight:600;margin-top:6px">Data</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Name</span>Part</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">ClassName</span>Part</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Position</span>0, 6.5, 0</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Rotation</span>0, 0, 0</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Size</span>4, 1.2, 2</div>
+<div style="color:#8fb4d9;font-weight:600;margin-top:6px">Behavior</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">Anchored</span>&#9745;</div>
+<div><span style="color:#9e9e9e;display:inline-block;width:118px">CanCollide</span>&#9745;</div>
+</div></div>
+</div>
+<div class="outwrap"><div class="phead">Output</div><div class="outbody" id="out">
+<div class="ok">[RobloxStudioBootstrap] Studio initialized in 1.84s</div>
+<div class="dim">Loaded place: Untitled Place (ROBLOX Place)</div>
+<div class="info">Selected: Workspace.Part</div>
+<div class="warn">Warning: Place has never been published</div>
+<div class="err">&#9654; Press Play to test the game</div>
+</div></div>
+<div class="cmdbar"><span class="cl">Command bar</span><input id="cmd" placeholder="type a command and press enter"></div>
+<div class="status"><span>&#9654; Ready</span><span>Baseplate 512 x 512</span><span>Studio &middot; Connected</span><span class="r">Ln 1, Col 1</span></div>
+<script>
+var out=document.getElementById('out');
+function log(t,c){var d=document.createElement('div');d.className=c||'dim';d.textContent=t;out.appendChild(d);out.scrollTop=out.scrollHeight}
+document.getElementById('tabs').addEventListener('click',function(e){var es=this.children;for(var i=0;i<es.length;i++)es[i].className='';e.target.className='on'});
+var tree=document.getElementById('tree');tree.addEventListener('click',function(e){var rows=this.children;for(var i=0;i<rows.length;i++)rows[i].className=rows[i].className.replace('sel','').trim();var t=e.target.closest('div');t.className=(t.className+' sel').trim();log('Selected: Workspace.'+t.textContent.replace(/^[\u25b8\u25be\u251c\u2514]+\s*/,'').trim(),'info')});
+document.getElementById('play').addEventListener('click',function(){log('Starting local server and 1 client...','dim');setTimeout(function(){log('[FLOWS] Character spawned','ok')},600)});
+document.getElementById('cmd').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim()){log('> '+this.value,'dim');log('Command executed','ok');this.value=''}});
+</script>
+</body>
+</html>
