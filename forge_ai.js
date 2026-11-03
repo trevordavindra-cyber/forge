@@ -111,4 +111,5 @@ var AI_BTNS=[],AI_ICONS=['icon-script','icon-sphere','icon-del','icon-copy','ico
 for(var _ai=0;_ai<LIB.length;_ai++){(function(k){AI_BTNS.push([AI_ICONS[k%AI_ICONS.length],LIB[k].label,function(){LIB[k].fn();}]);})(_ai);}
 AI_BTNS.push(null);AI_BTNS.push(['icon-help','AI Help',function(){aiHelp();}]);
 TABS.push(['AI',AI_BTNS]);
+buildTabs();
 out('FORGE v0.7 AI layer loaded — AI Assist: new AI tab builds real systems from prompts, or type ai <prompt> / ai help','sys');
