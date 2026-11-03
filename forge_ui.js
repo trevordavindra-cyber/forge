@@ -172,7 +172,7 @@ var UI_TPL_CODE={
 '\t\t\tchar.HumanoidRootPart.CFrame = target.CFrame + Vector3.new(0, 4, 0)',
 '\t\tend',
 '\tend)',
-'end'])))};
+'end']))};
 function uiPreview(name){
  var o=document.getElementById('overlay');o.classList.add('show');
  var rows='';
