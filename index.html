@@ -93,15 +93,9 @@ button.blue:hover{background:#1270ae}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{background:#3a3a46;border-radius:5px}
 ::-webkit-scrollbar-track{background:#1d1d26}
-#splash{position:fixed;inset:0;background:#1e1e26;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:500;transition:opacity .4s}
-#splash .logo{width:64px;height:64px;background:#00a2ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#fff;font-size:34px}
-#splash .name{color:#cfcfda;font-size:15px;font-weight:600;letter-spacing:2px}
-#splash .sub{color:#8a8a99;font-size:12px}
-#splash.hide{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
-<div id="splash"><div class="logo">F</div><div class="name">FORGE</div><div class="sub" id="splashmsg">Loading Roblox Studio replica…</div></div>
 <div id="app">
   <div id="titlebar"><div class="logo">F</div><span class="t">FORGE — Place1 (Roblox Studio Replica)</span><div class="win"><span></span><span></span><span class="x"></span></div></div>
   <div id="menubar"></div>
@@ -120,18 +114,15 @@ button.blue:hover{background:#1270ae}
 <div id="overlay"><div id="modal"></div></div>
 <script>
 (function(){
-var V='v16';
+var V='v15';
 var bases=['https://raw.githubusercontent.com/trevordavindra-cyber/forge/main/','https://cdn.jsdelivr.net/gh/trevordavindra-cyber/forge@main/'];
-var files=['forge_core.js','forge_mid.js','forge_end.js','forge_mobile.js','forge_safe.js','forge_script.js','forge_world.js','forge_build.js','forge_ai.js','forge_brain.js','forge_toolbox.js','forge_ui2.js','forge_plug.js','forge_export.js','forge_fit2.js'];
-var msg=document.getElementById('splashmsg'),splash=document.getElementById('splash'),doneN=0;
+var files=['forge_core.js','forge_mid.js','forge_end.js','forge_mobile.js','forge_safe.js','forge_script.js','forge_world.js','forge_build.js','forge_ai.js','forge_toolbox.js','forge_ui2.js','forge_plug.js','forge_export.js','forge_fit2.js'];
 function fetchText(url){return fetch(url).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();});}
 Promise.all(files.map(function(f){
- return fetchText(bases[0]+f+'?v='+V).catch(function(){return fetchText(bases[1]+f);}).then(function(t){doneN++;if(msg)msg.textContent='Loading '+doneN+' / '+files.length+'…';return t;});
+ return fetchText(bases[0]+f+'?v='+V).catch(function(){return fetchText(bases[1]+f);});
 })).then(function(parts){
  (0,eval)(parts.join('\n'));
- if(splash){splash.classList.add('hide');setTimeout(function(){splash.remove();},500);}
 }).catch(function(e){
- if(msg)msg.textContent='Could not load Forge core: '+e;
  var o=document.getElementById('output');
  if(o){var d=document.createElement('div');d.style.color='#ff7a7a';d.textContent='Could not load Forge core: '+e;o.appendChild(d);}
 });
