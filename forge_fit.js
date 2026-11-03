@@ -17,7 +17,7 @@ addCss([
 'body.compact #ribbonbtns::-webkit-scrollbar{display:none}',
 'body.compact #ribbonbtns .rb{flex:none}',
 'body.compact #output{font-size:10px}',
-'body.forge-mobile #f-theme{top:auto!important;bottom:calc(84px + env(safe-area-inset-bottom))!important}',
+'body.compact #f-theme{top:0!important;bottom:auto!important;right:6px!important;padding:4px 10px!important}',
 'body.compact #explorer,body.compact #propspanel{max-width:78vw}'
 ].join('\n'));
 function applyFit(){
