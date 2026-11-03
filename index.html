@@ -114,9 +114,9 @@ button.blue:hover{background:#1270ae}
 <div id="overlay"><div id="modal"></div></div>
 <script>
 (function(){
-var V='v08';
+var V='v09';
 var bases=['https://raw.githubusercontent.com/trevordavindra-cyber/forge/main/','https://cdn.jsdelivr.net/gh/trevordavindra-cyber/forge@main/'];
-var files=['forge_core.js','forge_mid.js','forge_end.js','forge_mobile.js','forge_script.js','forge_world.js','forge_build.js','forge_ai.js','forge_toolbox.js'];
+var files=['forge_core.js','forge_mid.js','forge_end.js','forge_mobile.js','forge_script.js','forge_world.js','forge_build.js','forge_ai.js','forge_toolbox.js','forge_ui.js'];
 function fetchText(url){return fetch(url).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.text();});}
 Promise.all(files.map(function(f){
  return fetchText(bases[0]+f+'?v='+V).catch(function(){return fetchText(bases[1]+f);});
