@@ -16,8 +16,7 @@ shade=function(p,nv){var s=_forge_shade(p,nv);if(LIGHT.bright===1)return s;
  var m=s.match(/rgba\((\d+),(\d+),(\d+),([\d.]+)\)/);if(!m)return s;var f=LIGHT.bright;
  return 'rgba('+Math.min(255,Math.round(+m[1]*f))+','+Math.min(255,Math.round(+m[2]*f))+','+Math.min(255,Math.round(+m[3]*f))+','+m[4]+')';};
 var _buildProps=buildProps;
-buildProps=function(){var p=SEL?DOC.nodes[SEL]:null;var el=document.getElementById('props');
- if(p&&p.cls==='Lighting'){el.innerHTML='';document.getElementById('st-sel').textContent='Lighting';
+function lightPanel(el){
   function lrow(k,inner){var tr=document.createElement('tr');var a=document.createElement('td');a.className='k';a.textContent=k;var b=document.createElement('td');b.appendChild(inner);tr.appendChild(a);tr.appendChild(b);el.appendChild(tr);return tr;}
   var s1=document.createElement('div');s1.className='sect';s1.textContent='Time of Day';el.appendChild(s1);
   var hr=document.createElement('input');hr.type='range';hr.min='0';hr.max='24';hr.step='0.5';hr.value=LIGHT.hour;hr.style.width='100%';
@@ -32,8 +31,10 @@ buildProps=function(){var p=SEL?DOC.nodes[SEL]:null;var el=document.getElementBy
   var s3=document.createElement('div');s3.className='sect';s3.textContent='Atmosphere';el.appendChild(s3);
   var fg=document.createElement('input');fg.type='range';fg.min='0';fg.max='0.9';fg.step='0.05';fg.value=LIGHT.fog;fg.style.width='100%';
   fg.onchange=function(){LIGHT.fog=+fg.value;saveLight();render();};lrow('Fog',fg);
-  var note=document.createElement('div');note.style.cssText='padding:8px 6px;color:#6a6a7a;font-size:10px';note.textContent='Preview lighting in this viewport. Clock, brightness and fog apply live.';el.appendChild(note);
-  return;}
+  var note=document.createElement('div');note.style.cssText='padding:8px 6px;color:#6a6a7a;font-size:10px';note.textContent='Preview lighting in this viewport. Clock, brightness and fog apply live.';el.appendChild(note);}
+buildProps=function(){var p=SEL?DOC.nodes[SEL]:null;var el=document.getElementById('props');
+ if((p&&p.cls==='Lighting')||(SEL==='Lighting')){document.getElementById('st-sel').textContent='Lighting (Lighting)';lightPanel(el);return;}
+ if(!p&&SEL&&typeof SERVICES!=='undefined'&&SERVICES.indexOf(SEL)>=0){el.innerHTML='<div style="padding:10px;color:#6a6a7a">'+SEL+' ('+SEL+') — no editable properties</div>';document.getElementById('st-sel').textContent=SEL+' ('+SEL+')';return;}
  if(p&&!p.pos&&p.cls!=='Script'){el.innerHTML='<div style="padding:10px;color:#6a6a7a">'+esc(p.name)+' ('+p.cls+') — no editable properties</div>';
   document.getElementById('st-sel').textContent=p.name+' ('+p.cls+')';return;}
  _buildProps();};
