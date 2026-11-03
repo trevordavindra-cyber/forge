@@ -30,3 +30,11 @@ Verified at `2026-11-03T15:38:30Z` in the provided environment.
 ## Honest boundary
 
 This is not a complete Roblox Studio competitor. Native Vulkan/Jolt/Luau, direct viewport terrain painting, full texture/animation pipelines, cloud collaboration, multiplayer infrastructure, authentication, authorized publishing, and most requirements remain incomplete and are displayed as such. See `docs/REMAINING_WORK.md` and `docs/WORLD_BUILDER.md`.
+
+
+## Final mobile workflow update — 2026-11-03
+
+- Added a searchable command palette available from the project toolbar and Ctrl/⌘+K. It exposes real actions for saving, importing/exporting, adding scene primitives/lights/scripts, opening AI/world/validation/output panels, undo/redo, preview, and the configured Roblox publishing flow.
+- The command palette is keyboard searchable, Enter executes the first filtered result, Escape closes it, and tapping the backdrop closes it. It is responsive for touch-sized screens.
+- This is a workflow improvement, not a claim that the outstanding native engine, multiplayer, cloud collaboration, full Luau runtime, or complete Roblox compatibility work has been completed.
+- Build/test verification for this update must be run in an environment with the package dependencies installed.
