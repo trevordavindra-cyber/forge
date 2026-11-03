@@ -120,12 +120,10 @@ function fetchText(url){return fetch(url).then(function(r){if(!r.ok)throw new Er
 Promise.all(files.map(function(f){
  return fetchText(bases[0]+f).catch(function(){return fetchText(bases[1]+f);});
 })).then(function(parts){
- var o=document.getElementById('output');
- parts.forEach(function(p,i){try{(0,eval)(p);}catch(e){
-  if(o){var d=document.createElement('div');d.className='ln err';d.textContent='Load error in layer '+(i+1)+': '+e.message;o.appendChild(d);}}});
+ (0,eval)(parts.join('\n'));
 }).catch(function(e){
  var o=document.getElementById('output');
- if(o){var d=document.createElement('div');d.className='ln err';d.textContent='Could not load Forge core: '+e;o.appendChild(d);}
+ if(o){var d=document.createElement('div');d.style.color='#ff7a7a';d.textContent='Could not load Forge core: '+e;o.appendChild(d);}
 });
 })();
 </script>
