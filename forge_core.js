@@ -45,14 +45,14 @@ function m3(rx,ry,rz){var dx=rx*Math.PI/180,dy=ry*Math.PI/180,dz=rz*Math.PI/180;
  var Zx=-sy2,Zy=cy2*sx,Zz=cy2*cx;
  return[[Rxx,Rxy,Rxz],[Ryx,Ryy,Ryz],[Zx,Zy,Zz]];}
 function mulv(M,v){return[dot(M[0],v),dot(M[1],v),dot(M[2],v)];}
-function boxCorners(p){var h=[p.size[0]/2,p.size[1]/2,p.size[2]/2],R=m3(p.rot[0],p.rot[1],p.rot[2]),out=[];
+function boxCorners(p){if(!p.rot)p.rot=[0,0,0];var h=[p.size[0]/2,p.size[1]/2,p.size[2]/2],R=m3(p.rot[0],p.rot[1],p.rot[2]),out=[];
  for(var i=0;i<8;i++){var v=[(i&1?1:-1)*h[0],(i&2?1:-1)*h[1],(i&4?1:-1)*h[2]];var w=mulv(R,v);out.push([p.pos[0]+w[0],p.pos[1]+w[1],p.pos[2]+w[2]]);}
  return out;}
 var BOXFACES=[[0,1,3,2],[4,6,7,5],[0,2,6,4],[1,5,7,3],[0,4,5,1],[2,3,7,6]];
 var WEDGEVERTS=function(s){var x=s[0]/2,y=s[1]/2,z=s[2]/2;
  return[[-x,-y,z],[x,-y,z],[x,-y,-z],[-x,-y,-z],[-x,y,-z],[x,y,-z]];};
 var WEDGEFACES=[[0,1,2,3],[3,2,5,4],[4,5,1,0],[0,4,3],[1,2,5]];
-function shapeVerts(p){var R=m3(p.rot[0],p.rot[1],p.rot[2]);
+function shapeVerts(p){if(!p.rot)p.rot=[0,0,0];var R=m3(p.rot[0],p.rot[1],p.rot[2]);
  function tf(v){var w=mulv(R,v);return[p.pos[0]+w[0],p.pos[1]+w[1],p.pos[2]+w[2]];}
  if(p.shape==='Wedge'){return WEDGEVERTS(p.size).map(tf);}
  if(p.shape==='Cylinder'){var r=p.size[0]/2,h=p.size[1]/2,N=10,vts=[];
@@ -78,7 +78,7 @@ function shade(p,nv){var b=0.52+0.48*Math.max(0,dot(nv,LDIR));var m=MATBRIGHT[p.
  return'rgba('+(r|0)+','+(g|0)+','+(bl|0)+','+a+')';}
 var ITEMS=[];
 function buildItems(cam){ITEMS.length=0;
- for(var k in DOC.nodes){var p=DOC.nodes[k];if(p.cls==='Script')continue;
+ for(var k in DOC.nodes){var p=DOC.nodes[k];if(p.cls==='Script'||!p.shape)continue;
   if(p.shape==='Sphere'){
    var c0=project(p.pos,cam);var r=Math.max(p.size[0],p.size[1],p.size[2])/2*CAMZ;
    ITEMS.push({d:c0.d,p:p,draw:function(it,c0){return function(){ctx.save();var g=ctx.createRadialGradient(c0.x-r*0.35,c0.y-r*0.35,r*0.1,c0.x,c0.y,r);var rgb=hex2rgb(it.p.color);var br=MATBRIGHT[it.p.mat]||1;g.addColorStop(0,'rgba('+Math.min(255,rgb[0]*br+40)+','+Math.min(255,rgb[1]*br+40)+','+Math.min(255,rgb[2]*br+40)+','+(1-it.p.trans)+')');g.addColorStop(1,'rgba('+(rgb[0]*0.45|0)+','+(rgb[1]*0.45|0)+','+(rgb[2]*0.45|0)+','+(1-it.p.trans)+')');ctx.fillStyle=g;ctx.beginPath();ctx.arc(c0.x,c0.y,r,0,7);ctx.fill();ctx.restore();};}(p,c0),kind:'sphere'});
@@ -124,7 +124,7 @@ function drawGizmo(p,cam){var c=project(p.pos,cam);var axes=[[1,0,0,'#ff5555'],[
   var ang=Math.atan2(tip.y-c.y,tip.x-c.x);ctx.fillStyle=ax[3];ctx.beginPath();
   ctx.moveTo(tip.x,tip.y);ctx.lineTo(tip.x-9*Math.cos(ang-0.4),tip.y-9*Math.sin(ang-0.4));ctx.lineTo(tip.x-9*Math.cos(ang+0.4),tip.y-9*Math.sin(ang+0.4));ctx.closePath();ctx.fill();
   GIZ.push({ax:i,x1:c.x,y1:c.y,x2:tip.x,y2:tip.y});}}
-function drawHandles(p,cam){HANDLES=[];var axes=[[1,0,0,'#ff5555'],[0,1,0,'#55ff77'],[0,0,1,'#5599ff']];
+function drawHandles(p,cam){if(!p.rot)p.rot=[0,0,0];HANDLES=[];var axes=[[1,0,0,'#ff5555'],[0,1,0,'#55ff77'],[0,0,1,'#5599ff']];
  var R=m3(p.rot[0],p.rot[1],p.rot[2]);
  for(var i=0;i<3;i++){for(var s=-1;s<=1;s+=2){var v=mulv(R,[axes[i][0]*p.size[i]/2*s,axes[i][1]*p.size[i]/2*s,axes[i][2]*p.size[i]/2*s]);
   var pt=project([p.pos[0]+v[0],p.pos[1]+v[1],p.pos[2]+v[2]],cam);
